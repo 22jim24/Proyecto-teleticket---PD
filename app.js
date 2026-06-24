@@ -51,27 +51,43 @@ import { Invitado } from "./Categoria/Invitado.js";
 import { Usuario } from "./Categoria/Usuario.js";
 import { UsuarioVip } from "./Categoria/UsuarioVIP.js";
 
-// Creamos las instancias (los usuarios reales)
 const clienteInvitado = new Invitado();
 const clienteNormal = new Usuario("Carlos Gómez", "carlos@correo.com");
 const clienteVip = new UsuarioVip("Ana Silva", "ana@vip.com", "VIP-2026");
 
-// --- SIMULACIÓN DE LA APLICACIÓN ---
 
 console.log("=== RECORRIDO DE USUARIOS EN LA APP ===");
 
-// 1. Caso Invitado
 console.log("\n--- Caso: Navegante Anónimo ---");
 console.log(clienteInvitado.verInformacionPublica());
 
-// 2. Caso Usuario Estándar
 console.log("\n--- Caso: Usuario Registrado ---");
 console.log(clienteNormal.verPerfil());
 console.log(clienteNormal.accederPanelControl());
 
-// 3. Caso Usuario VIP
 console.log("\n--- Caso: Usuario Premium ---");
-console.log(clienteVip.verPerfil());                  // Lo hereda de Usuario
-console.log(clienteVip.accederPanelControl());         // Lo hereda de Usuario
-console.log(clienteVip.accederContenidoPremium());     // Método propio de VIP
-console.log(clienteVip.solicitarSoporteInmediato());   // Método propio de VIP
+console.log(clienteVip.verPerfil());                  
+console.log(clienteVip.accederPanelControl());         
+console.log(clienteVip.accederContenidoPremium());     
+console.log(clienteVip.solicitarSoporteInmediato());   
+
+//Abioerto y cerrado J
+
+import { CalculadoraNotificacion } from "./Notificaciones/CalculadoraNotificacion.js";
+import { NotificacionGmail } from "./Notificaciones/NotificacionGmail.js";
+import { NotificacionWhatsapp } from "./Notificaciones/NotificacionWhatsapp.js";
+import { NotificacionSms } from "./Notificaciones/NotificacionSms.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const alertaUsuario = "Tu paquete ya está en camino";
+    const calculadora = new CalculadoraNotificacion();
+    
+    // Inyectamos dinámicamente el comportamiento que queremos
+    const resultadoGmail = calculadora.enviar(new NotificacionGmail(), alertaUsuario);
+    const resultadoWhatsapp = calculadora.enviar(new NotificacionWhatsapp(), alertaUsuario);
+    const resultadoSms = calculadora.enviar(new NotificacionSms(), alertaUsuario);
+
+    console.log(resultadoGmail);
+    console.log(resultadoWhatsapp);
+    console.log(resultadoSms);
+});
